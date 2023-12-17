@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>WOOOO</title>
+</head>
+<body>
+    <h1 id="sexyTitle"></h1>
+    <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/1SHcmPRPKYlDuYK7oFIocu?utm_source=generator" width="500" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    <!-- Container for SVG and moving text -->
+    <div class="container">
+        <div id="svg-container">
+            <object data="your-svg-file.svg" type="image/svg+xml" width="100%" height="500"></object>
+        </div>
+        
+        <!-- Moving Text -->
+        <div class="moving-text-container">
+            <div class="moving-text">WOOOOO!!</div>
+        </div>
+    </div>
+
+    <!-- Container for GIFs and centered circular play/pause sound button -->
+    <div class="centered-container">
+        <div class="gif-container"></div>
+        <button id="playPauseSoundButton" class="circle-button">Play Sound</button>
+    </div>
+
+    <!-- Audio element for sound -->
+    <audio id="audio" src="your-audio-file.mp3" preload="auto"></audio>
+
+    <script>
+        // Get references to the button, audio element, and gif container
+        const sexyTitleElement = document.getElementById("sexyTitle");
+        const playPauseSoundButton = document.getElementById("playPauseSoundButton");
+        const audio = document.getElementById("audio");
+        const gifContainer = document.querySelector(".gif-container");
+
+        // Initialize the button text to "Play Sound"
+        let isPlaying = false;
+        playPauseSoundButton.textContent = "Play Sound";
+
+        // Function to add GIFs one at a time in a spiral pattern
+        function addGifsSpiral() {
+            let numGifs = 8; // Number of GIFs to add
+            let angle = 0; // Initial angle
+            const delay = 500; // Delay between GIF appearances in milliseconds
+
+            function addGifWithDelay(i) {
+                setTimeout(() => {
+                    const gif = document.createElement("img");
+                    gif.src = "your-gif-file.gif"; // Replace with the path to your GIF file
+                    gif.classList.add("spiral-gif");
+                    gif.style.transform = `rotate(${angle}deg) translate(100px)`;
+
+                    gifContainer.appendChild(gif);
+
+                    angle += 45; // Increase the angle for the next GIF
+                }, i * delay);
+            }
+
+            for (let i = 0; i < numGifs; i++) {
+                addGifWithDelay(i);
+            }
+        }
+
+        // Add a click event listener to toggle play/pause and add GIFs
+        playPauseSoundButton.addEventListener("click", () => {
+            if (isPlaying) {
+                // Pause the audio when the button is clicked
+                audio.pause();
+                playPauseSoundButton.textContent = "Play Sound";
+            } else {
+                // Play the audio when the button is clicked
+                audio.play();
+                playPauseSoundButton.textContent = "Pause";
+                addGifsSpiral();
+            }
+            isPlaying = !isPlaying; // Toggle the play state
+        });
+
+        audio.addEventListener("ended", () => {
+    playPauseSoundButton.textContent = "Play Sound"; // Change the button text when audio ends
+    isPlaying = false; // Reset the play state
+});
+        // Get the current day of the week
+        const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+        const currentDate = new Date();
+        const currentDay = daysOfWeek[currentDate.getDay()];
+
+        // Update the <h1> element based on the current day
+        if (currentDay === "Wednesday") {
+            sexyTitleElement.textContent = "IT'S WOOBACK WEDNESDAY BABY!!";
+        } else {
+            sexyTitleElement.textContent = "WOOOOO!!";
+        }
+
+    </script>
+</body>
+</html>
