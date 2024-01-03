@@ -70,7 +70,7 @@ h1 {
 .centered-container {
     position: relative; /* Container needs relative positioning for absolute positioning of child elements */
     text-align: center;
-    margin-top: 250px;
+    margin-top: 260px;
     display: flex;
     justify-content: center; /* Center the items horizontally */
     align-items: center; /* Center the items vertically */
@@ -109,7 +109,7 @@ iframe {
     width: 500px; /* or any other size suitable for desktop */
     height: 152px; /* perfect size for medium one, smaller wastes space */
     border-radius: 12px;
-    margin: 90px 0px 0px 0px;
+    margin: 115px 0px 0px 0px;
     /* Other styles */
 }
 
