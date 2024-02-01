@@ -74,3 +74,20 @@ playPauseSoundButton.addEventListener("click", () => {
     } else {
         sexyTitleElement.textContent = "WOOOOO!!";
     }
+
+const supabase = createClient('https://eooyufnslcvykkshcpoy.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVvb3l1Zm5zbGN2eWtrc2hjcG95Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ1ODIzNDEsImV4cCI6MjAyMDE1ODM0MX0.hFE_nZIzAsnBmW5K9eM3qjLNBvWVOYsIIvU9dtkMFnM');
+
+document.getElementById('signup-form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  const { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+
+  // Handle the response
+  if (error) console.error(error);
+  else console.log('Signup success!', data);
+});
