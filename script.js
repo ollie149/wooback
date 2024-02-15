@@ -75,19 +75,71 @@ playPauseSoundButton.addEventListener("click", () => {
         sexyTitleElement.textContent = "WOOOOO!!";
     }
 
-const supabase = createClient('https://eooyufnslcvykkshcpoy.supabase.co', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVvb3l1Zm5zbGN2eWtrc2hjcG95Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ1ODIzNDEsImV4cCI6MjAyMDE1ODM0MX0.hFE_nZIzAsnBmW5K9eM3qjLNBvWVOYsIIvU9dtkMFnM');
+const supabaseUrl = 'https://eooyufnslcvykkshcpoy.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVvb3l1Zm5zbGN2eWtrc2hjcG95Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDQ1ODIzNDEsImV4cCI6MjAyMDE1ODM0MX0.hFE_nZIzAsnBmW5K9eM3qjLNBvWVOYsIIvU9dtkMFnM';
 
-document.getElementById('signup-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
+const supabase = supabase.createClient(supabaseUrl, supabaseAnonKey);
 
-  const { data, error } = await supabase.auth.signUp({
-    email,
-    password,
+async function signUp(email, password) {
+  const { user, error } = await supabase.auth.signUp({
+    email: email,
+    password: password,
   });
 
-  // Handle the response
-  if (error) console.error(error);
-  else console.log('Signup success!', data);
+  if (error) {
+    console.error('Signup error', error.message);
+  } else {
+    console.log('Signup success', user);
+  }
+}
+
+async function signIn(email, password) {
+  const { user, session, error } = await supabase.auth.signIn({
+    email: email,
+    password: password,
+  });
+
+  if (error) {
+    console.error('Login error', error.message);
+  } else {
+    console.log('Login success', user);
+  }
+}
+
+document.getElementById('signup-form').addEventListener('submit', async function(e) {
+  e.preventDefault(); // Prevent the default form submission
+
+  const email = document.getElementById('signup-email').value;
+  const password = document.getElementById('signup-password').value;
+
+  // Call the signUp function
+  const { user, error } = await supabase.auth.signUp({
+    email: email,
+    password: password,
+  });
+
+  if (error) {
+    alert('Signup error: ' + error.message);
+  } else {
+    alert('Signup successful!');
+  }
+});
+
+document.getElementById('login-form').addEventListener('submit', async function(e) {
+  e.preventDefault(); // Prevent the default form submission
+
+  const email = document.getElementById('login-email').value;
+  const password = document.getElementById('login-password').value;
+
+  // Call the signIn function
+  const { user, error } = await supabase.auth.signIn({
+    email: email,
+    password: password,
+  });
+
+  if (error) {
+    alert('Login error: ' + error.message);
+  } else {
+    alert('Login successful!');
+  }
 });
